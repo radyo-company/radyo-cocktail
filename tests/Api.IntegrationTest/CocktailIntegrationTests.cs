@@ -3,7 +3,7 @@ using Cocktail.Application.Extensions;
 using Cocktail.Application.Repositories;
 using Cocktail.Domain.Aggregates;
 using Cocktail.Infrastructure.Data;
-using Cocktail.Infrastructure.Extensions;
+using Cocktail.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +31,10 @@ public class CocktailIntegrationTests : IDisposable
         services.AddLogging();
         services.AddApi(configuration);
         services.AddApplication(configuration);
-        services.AddInfrastructure(configuration);
+        services.AddDbContext<CocktailContext>(options =>
+            options.UseSqlite(configuration.GetConnectionString(nameof(Cocktail))));
+        services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>))
+            .AddScoped(typeof(IQueryProcessor<>), typeof(QueryProcessor<>));
         
         var provider = services.BuildServiceProvider();
         var scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
