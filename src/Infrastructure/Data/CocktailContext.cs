@@ -14,7 +14,13 @@ public class CocktailContext : DbContext
     
     protected override void OnModelCreating( ModelBuilder modelBuilder )
     {
-        base.OnModelCreating( modelBuilder );
-        modelBuilder.ApplyAllConfigurationsAssemblyNamespace( Assembly.GetExecutingAssembly(), typeof( CocktailContext ).Namespace + ".EntityConfigurations" );
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Domain.Aggregates.Cocktail>()
+            .HasIndex(c => c.Name)
+            .IsUnique();
+
+        modelBuilder.ApplyAllConfigurationsAssemblyNamespace(Assembly.GetExecutingAssembly(),
+            typeof(CocktailContext).Namespace + ".EntityConfigurations");
     }
 }
