@@ -12,5 +12,6 @@ public abstract class EntityTypeConfiguration< TEntity, TKeyType > : IEntityType
         entityTypeBuilder.Property<DateTimeOffset>(AuditField.CreatedOn).IsRequired();
         entityTypeBuilder.Property< DateTimeOffset? >( AuditField.LastModifiedOn );
         entityTypeBuilder.Property< DateTimeOffset? >( AuditField.DeletedOn );
+        entityTypeBuilder.HasQueryFilter(x => x.DeletedOn == null);
     }
 }

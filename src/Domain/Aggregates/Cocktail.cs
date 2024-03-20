@@ -22,6 +22,7 @@ public class Cocktail : Entity<Guid>
         private set => _compositions = value.ToList();
     }
     
+    
     public IReadOnlyCollection<Step> Steps
     {
         get => _steps.ToImmutableList();
