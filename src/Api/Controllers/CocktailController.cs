@@ -1,6 +1,7 @@
 using Cocktail.Application.Handlers.Commands;
 using Cocktail.Application.Handlers.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cocktail.Api.Controllers;
@@ -8,6 +9,7 @@ namespace Cocktail.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class CocktailController(ISender mediator) : Controller
 {
     [HttpGet]

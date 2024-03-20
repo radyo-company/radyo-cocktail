@@ -2,6 +2,8 @@ using System.Reflection;
 using Cocktail.Api.Configurations;
 using Cocktail.Api.Interfaces;
 using Cocktail.Api.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -10,14 +12,33 @@ namespace Cocktail.Api.Extensions;
 
 public static class ServiceCollectionsExtensions
 {
-    public static IServiceCollection AddApi( this IServiceCollection services, IConfiguration configuration )
+    public static IServiceCollection AddApi(this IServiceCollection services, IConfiguration configuration)
     {
         var allowCors = configuration["AllowedHosts"]?.Split(";") ?? new[] { "*" };
-        return services
+        services
             .AddTransient<IStartupTask, SeedDataStartupTask>()
             .ConfigureCorsPolicy(allowCors)
             .AddSwagger(configuration)
             .AddSerilog(configuration);
+
+        services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = configuration["Auth0:Issuer"];
+                options.Audience = configuration["Swagger:Audience"];
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateLifetime = true
+                };
+            });
+
+        return services;
     }
 
     private static IServiceCollection AddSwagger( this IServiceCollection services, IConfiguration configuration )

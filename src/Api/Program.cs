@@ -21,10 +21,16 @@ if ( builder.Environment.IsDevelopment() )
 
 app.UseMiddleware< ExceptionHandlingMiddleware >();
 
-app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseHttpsRedirection();
 app.UseDefaultCorsPolicy();
 app.UseSerilogRequestLogging();
+
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.UseSwagger(builder.Configuration);
 app.MapControllers();
