@@ -5,14 +5,21 @@ using MediatR;
 
 namespace Cocktail.Application.Handlers.Queries;
 
-public record CocktailQuery : IRequest<IEnumerable<CocktailDto>>;
+public record CocktailQuery(string? IngredientName) : IRequest<IEnumerable<CocktailDto>>;
 
 public class CocktailQueryHandler(IQueryProcessor<Domain.Aggregates.Cocktail> cocktailRepository) : IRequestHandler<CocktailQuery, IEnumerable<CocktailDto>>
 {
     public async Task<IEnumerable<CocktailDto>> Handle(CocktailQuery request, CancellationToken cancellationToken)
     {
-        return await cocktailRepository.ListAsync(new CocktailSpec()
+        var spec = new CocktailSpec()
             .WithIngredients()
-            .WithStep(), cancellationToken);
+            .WithStep();
+
+        if (!string.IsNullOrEmpty(request.IngredientName))
+        {
+            spec.WithIngredientName(request.IngredientName);
+        }
+
+        return await cocktailRepository.ListAsync(spec, cancellationToken);
     }
 }
