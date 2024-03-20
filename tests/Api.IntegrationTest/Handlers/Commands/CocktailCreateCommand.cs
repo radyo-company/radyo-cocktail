@@ -8,7 +8,7 @@ public class CocktailCreateCommand : CocktailIntegrationTests
     public async Task ShouldHaveANewCocktail()
     {
         // Arrange
-        var request = new Cocktail.Application.Handlers.Commands.CocktailCreateCommand("Long Island");
+        var request = new Cocktail.Application.Handlers.Commands.CocktailCreateCommand("Long Island", "A cocktail made with rum, citrus juice (typically lime), and sugar or other sweetener.");
         
         // Act
         var result = await Mediator.Send(request);

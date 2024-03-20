@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Cocktail.Application.Handlers.Commands;
 
-public record CocktailCreateCommand(string Name) : IRequest<CocktailDto>;
+public record CocktailCreateCommand(string Name, string Description) : IRequest<CocktailDto>;
 
 public class CocktailCreateValidator : AbstractValidator<CocktailCreateCommand>
 {
@@ -15,6 +15,11 @@ public class CocktailCreateValidator : AbstractValidator<CocktailCreateCommand>
         RuleFor(x => x.Name)
             .NotNull()
             .NotEmpty();
+
+        RuleFor(x => x.Description)
+            .NotNull()
+            .NotEmpty()
+            .MaximumLength(100);
     }
 }
 
@@ -22,7 +27,7 @@ public class CocktailCreateCommandHandler(IAsyncRepository<Domain.Aggregates.Coc
 {
     public async Task<CocktailDto> Handle(CocktailCreateCommand request, CancellationToken cancellationToken)
     {
-        var cocktail = new Domain.Aggregates.Cocktail(request.Name);
+        var cocktail = new Domain.Aggregates.Cocktail(request.Name, request.Description);
         await cocktailRepository.AddAsync(cocktail, cancellationToken);
         return cocktail.Adapt<CocktailDto>();
     }

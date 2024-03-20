@@ -13,7 +13,7 @@ public static class ServiceCollectionsExtensions
     {
         var connectionString = configuration.GetConnectionString(nameof(Domain.Aggregates.Cocktail));
         services
-            .AddDbContext<CocktailContext>(options => options.UseSqlServer(connectionString))
+            .AddDbContext<CocktailContext>(options => options.UseSqlite(connectionString))
             .AddRepositories();
         
         return services;

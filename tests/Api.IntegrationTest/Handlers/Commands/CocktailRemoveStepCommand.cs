@@ -20,7 +20,7 @@ public class CocktailRemoveStepCommand : CocktailIntegrationTests
         await IngredientRepository.AddAsync(vermouth);
         await IngredientRepository.AddAsync(ice);
         
-        var negroni = new Cocktail.Domain.Aggregates.Cocktail("Negroni");
+        var negroni = new Cocktail.Domain.Aggregates.Cocktail("Negroni", "A cocktail made with rum, citrus juice (typically lime), and sugar or other sweetener.");
         negroni.AddComposition(new Composition(30, Unit.Ml, gin));
         negroni.AddComposition(new Composition(30, Unit.Ml, vermouth));
         negroni.AddComposition(new Composition(30, Unit.Ml, campari));

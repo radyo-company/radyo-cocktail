@@ -84,22 +84,25 @@ public class SeedDataStartupTask(IServiceProvider serviceProvider) : IStartupTas
         await ingredientRepository.AddAsync(bourbon);
         await ingredientRepository.AddAsync(cranberryJuice);
         await ingredientRepository.AddAsync(espresso);
-    
-        var negroni = new Domain.Aggregates.Cocktail("Negroni");
+
+        var negroni = new Domain.Aggregates.Cocktail("Negroni",
+            "A popular Italian cocktail, made of one part gin, one part vermouth rosso, and one part Campari, garnished with orange peel.");
         negroni.AddComposition(new Composition(30, Unit.Ml, gin));
         negroni.AddComposition(new Composition(30, Unit.Ml, vermouth));
         negroni.AddComposition(new Composition(30, Unit.Ml, campari));
         negroni.AddComposition(new Composition(5, Unit.Pc, ice));
         negroni.AddStep(new Step(0, "Stir all ingredients in mixing glass with ice and strain into chilled glass. Garnish with orange twist."));
-        
-        var margarita = new Domain.Aggregates.Cocktail("Margarita");
+
+        var margarita = new Domain.Aggregates.Cocktail("Margarita",
+            "A cocktail consisting of tequila, orange liqueur, and lime juice often served with salt on the rim of the glass.");
         margarita.AddComposition(new Composition(40, Unit.Ml, tequila));
         margarita.AddComposition(new Composition(20, Unit.Ml, cointreau));
         margarita.AddComposition(new Composition(20, Unit.Ml, limeJuice));
         margarita.AddComposition(new Composition(3, Unit.Pc, ice));
         margarita.AddStep(new Step(0, "Shake all ingredients with ice and strain into a cocktail glass rimmed with salt."));
-        
-        var mojito = new Domain.Aggregates.Cocktail("Mojito");
+
+        var mojito = new Domain.Aggregates.Cocktail("Mojito",
+            "A refreshing cocktail made from five ingredients: white rum, sugar, lime juice, soda water, and mint.");
         mojito.AddComposition(new Composition(50, Unit.Ml, rum));
         mojito.AddComposition(new Composition(20, Unit.Ml, limeJuice));
         mojito.AddComposition(new Composition(6, Unit.Pc, mint));
@@ -107,47 +110,54 @@ public class SeedDataStartupTask(IServiceProvider serviceProvider) : IStartupTas
         mojito.AddComposition(new Composition(100, Unit.Ml, soda));
         mojito.AddComposition(new Composition(10, Unit.Pc, ice));
         mojito.AddStep(new Step(0, "Muddle mint leaves with sugar and lime juice. Add a splash of soda water and fill the glass with cracked ice. Pour the rum and top with soda water. Garnish with sprig of mint."));
-        
-        var spritz = new Domain.Aggregates.Cocktail("Spritz");
+
+        var spritz = new Domain.Aggregates.Cocktail("Spritz",
+            "An Italian wine-based cocktail, commonly served as an aperitif in Northeast Italy.");
         spritz.AddComposition(new Composition(60, Unit.Ml, prosecco));
         spritz.AddComposition(new Composition(60, Unit.Ml, aperol));
         spritz.AddComposition(new Composition(30, Unit.Ml, soda));
         spritz.AddComposition(new Composition(5, Unit.Pc, ice));
         spritz.AddStep(new Step(0, "Build into glass over ice, garnish and serve."));
-        
-        var screwdriver = new Domain.Aggregates.Cocktail("Screwdriver");
+
+        var screwdriver = new Domain.Aggregates.Cocktail("Screwdriver",
+            "A simple but invigorating cocktail made with vodka and orange juice, served tall over ice.");
         screwdriver.AddComposition(new Composition(50, Unit.Ml, vodka));
         screwdriver.AddComposition(new Composition(100, Unit.Ml, orangeJuice));
         screwdriver.AddComposition(new Composition(5, Unit.Pc, ice));
         screwdriver.AddStep(new Step(0, "Build all ingredients in a highball glass filled with ice. Garnish with orange slice."));
-        
-        var bellini = new Domain.Aggregates.Cocktail("Bellini");
+
+        var bellini = new Domain.Aggregates.Cocktail("Bellini",
+            "An Italian cocktail composed of Prosecco sparkling wine and peach purée or nectar.");
         bellini.AddComposition(new Composition(100, Unit.Ml, prosecco));
         bellini.AddComposition(new Composition(50, Unit.Ml, peachSchnapps));
         bellini.AddStep(new Step(0, "Pour peach puree into chilled glass and add prosecco."));
-        
-        var cosmopolitan = new Domain.Aggregates.Cocktail("Cosmopolitan");
+
+        var cosmopolitan = new Domain.Aggregates.Cocktail("Cosmopolitan",
+            "A classy cocktail made with vodka, triple sec, cranberry juice, and freshly squeezed or sweetened lime juice.");
         cosmopolitan.AddComposition(new Composition(40, Unit.Ml, vodka));
         cosmopolitan.AddComposition(new Composition(15, Unit.Ml, cointreau));
         cosmopolitan.AddComposition(new Composition(30, Unit.Ml, limeJuice));
         cosmopolitan.AddComposition(new Composition(30, Unit.Ml, cranberryJuice));
         cosmopolitan.AddComposition(new Composition(2, Unit.Pc, ice));
         cosmopolitan.AddStep(new Step(0, "Shake all ingredients with ice and strain into a martini glass. Garnish with a lime wedge."));
-        
-        var oldFashioned = new Domain.Aggregates.Cocktail("Old Fashioned");
+
+        var oldFashioned = new Domain.Aggregates.Cocktail("Old Fashioned",
+            "Known as a classic cocktail, the Old Fashioned is a blend of bourbon (or rye), sugar, and a few dashes of bitters.");
         oldFashioned.AddComposition(new Composition(60, Unit.Ml, bourbon));
         oldFashioned.AddComposition(new Composition(5, Unit.Ml, sugarSyrup));
         oldFashioned.AddComposition(new Composition(5, Unit.Ml, angosturaBitters));
         oldFashioned.AddComposition(new Composition(5, Unit.Pc, ice));
-        
-        var espressoMartini = new Domain.Aggregates.Cocktail("Espresso Martini");
+
+        var espressoMartini = new Domain.Aggregates.Cocktail("Espresso Martini",
+            "A cold, coffee-flavored cocktail made with vodka, espresso coffee, coffee liqueur, and sugar syrup.");
         espressoMartini.AddComposition(new Composition(50, Unit.Ml, vodka));
         espressoMartini.AddComposition(new Composition(10, Unit.Ml, coffeeLiqueur));
         espressoMartini.AddComposition(new Composition(50, Unit.Ml, espresso));
         espressoMartini.AddComposition(new Composition(5, Unit.Pc, ice));
         espressoMartini.AddStep(new Step(0, "Shake all ingredients with ice and strain into a martini glass. Garnish with coffee beans."));
-        
-        var daiquiri = new Domain.Aggregates.Cocktail("Daiquiri");
+
+        var daiquiri = new Domain.Aggregates.Cocktail("Daiquiri",
+            "A cocktail made with rum, citrus juice (typically lime), and sugar or other sweetener.");
         daiquiri.AddComposition(new Composition(50, Unit.Ml, rum));
         daiquiri.AddComposition(new Composition(20, Unit.Ml, limeJuice));
         daiquiri.AddComposition(new Composition(10, Unit.Ml, sugarSyrup));
